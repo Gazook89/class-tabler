@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Load the SVG.js library -->
+    <script src="https://cdn.jsdelivr.net/npm/@svgdotjs/svg.js@3.0/dist/svg.min.js"></script>
+	<link rel="stylesheet" href="./coloris.min.css"/>
+	<script src="./coloris.min.js"></script>
+    <title>Image Recoloring Filter</title>
+</head>
+
+<body>
+    <label for='frameColor'>Frame</label><input type='text' data-coloris id='frameColor' value='#f6ed64'>
+	<label for='bodyColor'>Inside</label><input type='text' data-coloris id='bodyColor' value='#FFF'>
+
+    <div id='svg-box'></div>
+    <script>
+        const frameColorPicker = document.getElementById('frameColor');
+		const bodyColorPicker = document.getElementById('bodyColor');
+		Coloris({
+			theme: 'pill'
+		})
+
+        let draw = SVG().addTo('#svg-box');
+        let frame;
+
+        frameColorPicker.addEventListener('input', ()=>{setColor({ el:'#color-frame', property: 'stroke' }, frameColorPicker.value)}, false);
+		bodyColorPicker.addEventListener('input', ()=>{setColor({ el: '#frame-body', property: 'fill' }, bodyColorPicker.value)}, false);
+
+        // Call updateColor once when the page loads to initialize the SVG with the default color
+        loadSVG();
+
+        async function setColor(target, color) {
+			console.log(frame.findOne(target.el))
+			console.log(color);
+            // Update the color of the SVG element
+			if(frame.findOne(target.el).node.children.length > 0){
+				frame.findOne(target.el).each(function () {
+					console.log(this)
+					this.css(target.property, color);
+				});
+
+			} else {
+				frame.findOne(target.el).css(target.property, color);
+			}
+        }
+
+        async function loadSVG() {
+            var ajax = new XMLHttpRequest();
+            ajax.open('GET', './black-line.svg', true);
+            ajax.send();
+            await new Promise((resolve, reject) => {
+                ajax.onload = function (e) {
+                    // Clear existing SVG content
+                    draw.clear();
+                    // Draw new SVG content
+                    frame = draw.svg(ajax.responseText);
+                    frame.size(800, 800);
+					setColor({ el: '#color-frame', property: 'stroke'}, frameColorPicker.value);
+                    // Resolve the promise when the SVG is drawn
+                    resolve();
+                };
+                ajax.onerror = function (error) {
+                    // Reject the promise if there's an error with the AJAX request
+                    reject(error);
+                };
+            });
+        }
+    </script>
+</body>
+<style>
+    body {
+        background: #ccc;
+    }
+</style>
+
+</html>
