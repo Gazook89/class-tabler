@@ -14,11 +14,13 @@
 <body>
     <label for='frameColor'>Frame</label><input type='text' data-coloris id='frameColor' value='#f6ed64'>
 	<label for='bodyColor'>Inside</label><input type='text' data-coloris id='bodyColor' value='#FFF'>
+	<label for='frameColorStrokeWidth'>Stroke Width</label><input type='text' id='frameColorStrokeWidth' value='8'>
 
     <div id='svg-box'></div>
     <script>
         const frameColorPicker = document.getElementById('frameColor');
 		const bodyColorPicker = document.getElementById('bodyColor');
+		const frameColorStrokeWidth = document.getElementById('frameColorStrokeWidth');
 		Coloris({
 			theme: 'pill'
 		})
@@ -28,22 +30,23 @@
 
         frameColorPicker.addEventListener('input', ()=>{setColor({ el:'#color-frame', property: 'stroke' }, frameColorPicker.value)}, false);
 		bodyColorPicker.addEventListener('input', ()=>{setColor({ el: '#frame-body', property: 'fill' }, bodyColorPicker.value)}, false);
+		frameColorStrokeWidth.addEventListener('input', ()=>{setColor({ el: '#color-frame', property: 'stroke-width' }, frameColorStrokeWidth.value + 'px')}, false);
 
         // Call updateColor once when the page loads to initialize the SVG with the default color
         loadSVG();
 
-        async function setColor(target, color) {
+        async function setColor(target, value) {
 			console.log(frame.findOne(target.el))
-			console.log(color);
+			console.log(value);
             // Update the color of the SVG element
 			if(frame.findOne(target.el).node.children.length > 0){
 				frame.findOne(target.el).each(function () {
 					console.log(this)
-					this.css(target.property, color);
+					this.css(target.property, value);
 				});
 
 			} else {
-				frame.findOne(target.el).css(target.property, color);
+				frame.findOne(target.el).css(target.property, value);
 			}
         }
 
