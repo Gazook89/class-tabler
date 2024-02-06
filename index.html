@@ -13,7 +13,8 @@
 
 <body>
     <div id='controls'>
-        <label for='frameColor'>Frame<input type='text' data-coloris id='frameColor' value='#f2ce4a'></label>
+        <label for='outerFrameColor'>Outer Frame<input type='text' data-coloris id='outerFrameColor' value='#f2ce4a'></label>
+        <label for='innerFrameColor'>Inner Frame<input type='text' data-coloris id='innerFrameColor' value='#000'></label>
         <label for='bodyColor'>Inside<input type='text' data-coloris id='bodyColor' value='#FFF'></label>
         <label for='frameColorStrokeWidth'>Stroke Width<input type='text' id='frameColorStrokeWidth' value='15'></label>
     </div>
@@ -23,7 +24,8 @@
     <div id='png-container' class='graphic-container'></div>
 
     <script>
-        const frameColorPicker = document.getElementById('frameColor');
+        const outerFrameColorPicker = document.getElementById('outerFrameColor');
+        const innerFrameColorPicker = document.getElementById('innerFrameColor');
 		const bodyColorPicker = document.getElementById('bodyColor');
 		const frameColorStrokeWidth = document.getElementById('frameColorStrokeWidth');
 		Coloris({
@@ -33,7 +35,8 @@
         let draw = SVG().addTo('#svg-box');
         let frame;
 
-        frameColorPicker.addEventListener('input', ()=>{setColor({ el:'#color-frame', property: 'stroke' }, frameColorPicker.value)}, false);
+        outerFrameColorPicker.addEventListener('input', ()=>{setColor({ el:'#outer-color-frame', property: 'stroke' }, outerFrameColorPicker.value)}, false);
+        innerFrameColorPicker.addEventListener('input', ()=>{setColor({ el:'#inner-color-frame', property: 'stroke' }, innerFrameColorPicker.value)}, false);
 		bodyColorPicker.addEventListener('input', ()=>{setColor({ el: '#frame-body', property: 'fill' }, bodyColorPicker.value)}, false);
 		frameColorStrokeWidth.addEventListener('input', ()=>{setColor({ el: '#color-frame', property: 'stroke-width' }, frameColorStrokeWidth.value + 'px')}, false);
 
@@ -63,7 +66,7 @@
                     // Draw new SVG content
                     frame = draw.svg(ajax.responseText);
                     frame.size(522, 422);
-					setColor({ el: '#color-frame', property: 'stroke'}, frameColorPicker.value);
+					setColor({ el: '#outer-color-frame', property: 'stroke'}, outerFrameColorPicker.value);
                     // Resolve the promise when the SVG is drawn
                     resolve();
                 };
