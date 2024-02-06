@@ -22,14 +22,12 @@
     <!-- BLUR -->
         <filter id='myFilter'>
             <!-- bevel -->
-            <feConvolveMatrix in="SourceAlpha" order="3,3" kernelMatrix="
-            -100 -10 0 
+            <feConvolveMatrix in="SourceAlpha" order="3,3" kernelMatrix="-100 -10 0 
             -50 0 10 
             0 20 80
             " divisor="1.1" targetX="0" targetY="0" kernelUnitLength=".9" result="bevel"></feConvolveMatrix>
             <!-- 4aa8a27b-5500-4bd4-a314-2daaf8709f78 -->
-            <feColorMatrix values="
-            1 0 0 0 0,
+            <feColorMatrix values="1 0 0 0 0,
             0 1 0 0 0,
             0 0 1 0 0,
             0 0 0 .6 0" result="ConvolveRecolor" in="bevel"></feColorMatrix>
