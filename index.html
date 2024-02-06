@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!-- by Gazook89 Feb 2024 -->
 <html lang="en">
 
 <head>
@@ -6,18 +7,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Load the SVG.js library -->
     <script src="https://cdn.jsdelivr.net/npm/@svgdotjs/svg.js@3.0/dist/svg.min.js"></script>
-	<link rel="stylesheet" href="./coloris.min.css"/>
-	<script src="./coloris.min.js"></script>
+	<link rel="stylesheet" href="./coloris.css"/>
+    <link rel="stylesheet" href='./styles.css' />
+	<script src="./coloris.js"></script>
     <title>Image Recoloring Filter</title>
 </head>
 
 <body>
     <div id='controls'>
-        <label for='outerFrameColor'>Outer Frame<input type='text' data-coloris id='outerFrameColor' value='#f2ce4a'></label>
-        <label for='innerFrameColor'>Inner Frame<input type='text' data-coloris id='innerFrameColor' value='#141414'></label>
-        <label for='outerFrameColorStrokeWidth'>Stroke Width<input type='range' id='outerFrameColorStrokeWidth' min='0' max='20' step='.2' value='15'></label>
-        <label for='innerFrameColorStrokeWidth'>Stroke Width<input type='range' id='innerFrameColorStrokeWidth' min='0' max='20' step='.2' value='8'></label>
-        <label for='bodyColor'>Inside<input type='text' data-coloris id='bodyColor' value='#FFF'></label>
+        <div class='control'>
+            <label for='outerFrameColor'>Outer Frame</label>
+            <input type='text' data-coloris id='outerFrameColor' value='#f2ce4a'>
+        </div>
+        <div class='control'>
+            <label for='innerFrameColor'>Inner Frame</label>
+            <input type='text' data-coloris id='innerFrameColor' value='#141414'>
+        </div>
+        <div class='control'>
+            <label for='outerFrameColorStrokeWidth'>Stroke Width</label>
+            <input type='range' id='outerFrameColorStrokeWidth' min='0' max='20' step='.2' value='15'>
+        </div>
+        <div class='control'>
+            <label for='innerFrameColorStrokeWidth'>Stroke Width</label>
+            <input type='range' id='innerFrameColorStrokeWidth' min='0' max='20' step='.2' value='8'>
+        </div>
+        <div class='control'>
+            <label for='bodyColor'>Inside</label>
+            <input type='text' data-coloris id='bodyColor' value='#FFF'>
+        </div>
     </div>
     <button id="convertToPNG">Convert to PNG</button>
 
@@ -101,27 +118,5 @@
         });
     </script>
 </body>
-<style>
-    body {
-        background: #666;
-		color: #EFEFEF;
-		font-family: sans-serif;
-        & svg {
-            border: 1px solid #777;
-            margin: 10px 0;
-        }
-        & #controls {
-            display: flex;
-            flex-direction: column;
-            gap: 1em;
-            margin: 10px 0;
-            width: 350px;
-            & label *:first-child {
-                margin-left: 15px;
-            }
-
-        }
-    }
-</style>
 
 </html>
