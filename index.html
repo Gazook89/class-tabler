@@ -17,6 +17,11 @@
 	<label for='frameColorStrokeWidth'>Stroke Width</label><input type='text' id='frameColorStrokeWidth' value='8'>
 
     <div id='svg-box'></div>
+
+	<canvas id='canvas' width='800' height='800'></canvas>
+	<div id='png-container'></div>
+
+
     <script>
         const frameColorPicker = document.getElementById('frameColor');
 		const bodyColorPicker = document.getElementById('bodyColor');
@@ -36,12 +41,9 @@
         loadSVG();
 
         async function setColor(target, value) {
-			console.log(frame.findOne(target.el))
-			console.log(value);
             // Update the color of the SVG element
 			if(frame.findOne(target.el).node.children.length > 0){
 				frame.findOne(target.el).each(function () {
-					console.log(this)
 					this.css(target.property, value);
 				});
 
@@ -71,6 +73,7 @@
                 };
             });
         }
+
     </script>
 </body>
 <style>
