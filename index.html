@@ -15,11 +15,14 @@
     <label for='frameColor'>Frame</label><input type='text' data-coloris id='frameColor' value='#f6ed64'>
 	<label for='bodyColor'>Inside</label><input type='text' data-coloris id='bodyColor' value='#FFF'>
 	<label for='frameColorStrokeWidth'>Stroke Width</label><input type='text' id='frameColorStrokeWidth' value='8'>
+	<!-- Button to convert SVG to PNG -->
+    <button id="convertToPNG">Convert to PNG</button>
 
     <div id='svg-box'></div>
 
-	<canvas id='canvas' width='800' height='800'></canvas>
-	<div id='png-container'></div>
+    <div id='png-container'></div>
+
+    
 
 
     <script>
@@ -74,11 +77,32 @@
             });
         }
 
+            // Button click event to convert SVG to PNG
+			document.getElementById('convertToPNG').addEventListener('click', () => {
+            const svgString = frame.svg();
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = 800;
+            canvas.height = 800;
+            const DOMURL = self.URL || self.webkitURL || self;
+            const img = new Image();
+            const svg = new Blob([svgString], { type: 'image/svg+xml;charset=utf-8' });
+            const url = DOMURL.createObjectURL(svg);
+            img.onload = function () {
+                ctx.drawImage(img, 0, 0);
+                var png = canvas.toDataURL('image/png');
+                document.querySelector('#png-container').innerHTML = `<img src="${png}">`;
+                DOMURL.revokeObjectURL(png);
+            }
+            img.src = url;
+        });
     </script>
 </body>
 <style>
     body {
-        background: #ccc;
+        background: #666;
+		color: #EFEFEF;
+		font-family: sans-serif;
     }
 </style>
 
