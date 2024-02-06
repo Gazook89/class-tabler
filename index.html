@@ -12,18 +12,15 @@
 </head>
 
 <body>
-    <label for='frameColor'>Frame</label><input type='text' data-coloris id='frameColor' value='#f6ed64'>
-	<label for='bodyColor'>Inside</label><input type='text' data-coloris id='bodyColor' value='#FFF'>
-	<label for='frameColorStrokeWidth'>Stroke Width</label><input type='text' id='frameColorStrokeWidth' value='8'>
-	<!-- Button to convert SVG to PNG -->
+    <div id='controls'>
+        <label for='frameColor'>Frame<input type='text' data-coloris id='frameColor' value='#f2ce4a'></label>
+        <label for='bodyColor'>Inside<input type='text' data-coloris id='bodyColor' value='#FFF'></label>
+        <label for='frameColorStrokeWidth'>Stroke Width<input type='text' id='frameColorStrokeWidth' value='8'></label>
+    </div>
     <button id="convertToPNG">Convert to PNG</button>
 
-    <div id='svg-box'></div>
-
-    <div id='png-container'></div>
-
-    
-
+    <div id='svg-box' class='graphic-container'></div>
+    <div id='png-container' class='graphic-container'></div>
 
     <script>
         const frameColorPicker = document.getElementById('frameColor');
@@ -57,7 +54,7 @@
 
         async function loadSVG() {
             var ajax = new XMLHttpRequest();
-            ajax.open('GET', './black-line.svg', true);
+            ajax.open('GET', './frame.svg', true);
             ajax.send();
             await new Promise((resolve, reject) => {
                 ajax.onload = function (e) {
@@ -65,7 +62,7 @@
                     draw.clear();
                     // Draw new SVG content
                     frame = draw.svg(ajax.responseText);
-                    frame.size(800, 800);
+                    frame.size(522, 422);
 					setColor({ el: '#color-frame', property: 'stroke'}, frameColorPicker.value);
                     // Resolve the promise when the SVG is drawn
                     resolve();
@@ -82,8 +79,8 @@
             const svgString = frame.svg();
             const canvas = document.createElement('canvas');
             const ctx = canvas.getContext('2d');
-            canvas.width = 800;
-            canvas.height = 800;
+            canvas.width = 522;
+            canvas.height = 422;
             const DOMURL = self.URL || self.webkitURL || self;
             const img = new Image();
             const svg = new Blob([svgString], { type: 'image/svg+xml;charset=utf-8' });
@@ -103,6 +100,21 @@
         background: #666;
 		color: #EFEFEF;
 		font-family: sans-serif;
+        & svg {
+            border: 1px solid #777;
+            margin: 10px 0;
+        }
+        & #controls {
+            display: flex;
+            flex-direction: column;
+            gap: 1em;
+            margin: 10px 0;
+            width: 350px;
+            & label *:first-child {
+                margin-left: 15px;
+            }
+
+        }
     }
 </style>
 
