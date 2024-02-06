@@ -14,9 +14,10 @@
 <body>
     <div id='controls'>
         <label for='outerFrameColor'>Outer Frame<input type='text' data-coloris id='outerFrameColor' value='#f2ce4a'></label>
-        <label for='innerFrameColor'>Inner Frame<input type='text' data-coloris id='innerFrameColor' value='#000'></label>
+        <label for='innerFrameColor'>Inner Frame<input type='text' data-coloris id='innerFrameColor' value='#141414'></label>
+        <label for='outerFrameColorStrokeWidth'>Stroke Width<input type='range' id='outerFrameColorStrokeWidth' min='0' max='20' step='.2' value='15'></label>
+        <label for='innerFrameColorStrokeWidth'>Stroke Width<input type='range' id='innerFrameColorStrokeWidth' min='0' max='20' step='.2' value='8'></label>
         <label for='bodyColor'>Inside<input type='text' data-coloris id='bodyColor' value='#FFF'></label>
-        <label for='frameColorStrokeWidth'>Stroke Width<input type='text' id='frameColorStrokeWidth' value='15'></label>
     </div>
     <button id="convertToPNG">Convert to PNG</button>
 
@@ -26,8 +27,9 @@
     <script>
         const outerFrameColorPicker = document.getElementById('outerFrameColor');
         const innerFrameColorPicker = document.getElementById('innerFrameColor');
+		const outerFrameColorStrokeWidth = document.getElementById('outerFrameColorStrokeWidth');
+		const innerFrameColorStrokeWidth = document.getElementById('innerFrameColorStrokeWidth');
 		const bodyColorPicker = document.getElementById('bodyColor');
-		const frameColorStrokeWidth = document.getElementById('frameColorStrokeWidth');
 		Coloris({
 			theme: 'pill'
 		})
@@ -37,8 +39,9 @@
 
         outerFrameColorPicker.addEventListener('input', ()=>{setColor({ el:'#outer-color-frame', property: 'stroke' }, outerFrameColorPicker.value)}, false);
         innerFrameColorPicker.addEventListener('input', ()=>{setColor({ el:'#inner-color-frame', property: 'stroke' }, innerFrameColorPicker.value)}, false);
+		outerFrameColorStrokeWidth.addEventListener('input', ()=>{setColor({ el: '#outer-color-frame', property: 'stroke-width' }, outerFrameColorStrokeWidth.value + 'px')}, false);
+		innerFrameColorStrokeWidth.addEventListener('input', ()=>{setColor({ el: '#inner-color-frame', property: 'stroke-width' }, innerFrameColorStrokeWidth.value + 'px')}, false);
 		bodyColorPicker.addEventListener('input', ()=>{setColor({ el: '#frame-body', property: 'fill' }, bodyColorPicker.value)}, false);
-		frameColorStrokeWidth.addEventListener('input', ()=>{setColor({ el: '#color-frame', property: 'stroke-width' }, frameColorStrokeWidth.value + 'px')}, false);
 
         // Call updateColor once when the page loads to initialize the SVG with the default color
         loadSVG();
