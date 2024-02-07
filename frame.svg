@@ -45,7 +45,7 @@
             <feConvolveMatrix in="SourceAlpha" order="3,3" kernelMatrix="-100 -10 0 
             -50 0 10 
             0 20 130
-            " divisor="1.5" targetX="0" targetY="0" kernelUnitLength=".8" result="bevel"></feConvolveMatrix>
+            " divisor="1.5" targetX="2" targetY="0" kernelUnitLength=".8" result="bevel"></feConvolveMatrix>
             <!-- 4aa8a27b-5500-4bd4-a314-2daaf8709f78 -->
             <feColorMatrix values="1 0 0 0 0,
             0 1 0 0 0,
