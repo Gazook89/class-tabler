@@ -22,6 +22,19 @@
             <circle cx="179.075" cy="14.417" r="6.87" style="fill:#141414;"/>
             <circle cx="354.225" cy="14.417" r="6.87" style="fill:#141414;"/>
         </g>
+        <g id="rows">
+            <rect x="54.335" y="268.184" width="424.515" height="29.397" style="fill:#d2dda6;"/>
+            <rect x="54.335" y="209.39" width="424.515" height="29.397" style="fill:#d2dda6;"/>
+            <rect x="54.335" y="150.596" width="424.515" height="29.397" style="fill:#d2dda6;"/>
+        </g>
+        <g id="text">
+            <text x="65.76px" y="290.735px" style="font-family:'ScalySans', 'Scaly Sans';font-size:24px;fill:#2e271e;">5 <tspan x="113.76px " y="290.735px ">D</tspan>olore fugiat exercitation</text>
+            <text x="65.707px" y="261.338px" style="font-family:'ScalySans', 'Scaly Sans';font-size:24px;fill:#2e271e;">4 <tspan x="113.707px " y="261.338px ">O</tspan>ccaecat dolor</text>
+            <text x="65.707px" y="231.941px" style="font-family:'ScalySans', 'Scaly Sans';font-size:24px;fill:#2e271e;">3 <tspan x="113.707px " y="231.941px ">R</tspan>eprehender sit et do labore.</text>
+            <text x="65.707px" y="202.544px" style="font-family:'ScalySans', 'Scaly Sans';font-size:24px;fill:#2e271e;">2 <tspan x="113.707px " y="202.544px ">D</tspan>eserunt ipsum do</text>
+            <text x="65.76px" y="173.146px" style="font-family:'ScalySans', 'Scaly Sans';font-size:24px;fill:#2e271e;">1 <tspan x="113.76px " y="173.146px ">D</tspan>erit est eu reprehenderit</text>
+            <text x="60.409px" y="115.822px" style="font-family:'ScalySansCaps', 'Scaly Sans Caps';font-size:40px;fill:#2e271e;">Class Table</text>
+        </g>
     </g>
     <defs>
     <!-- BLUR -->

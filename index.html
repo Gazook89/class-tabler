@@ -35,11 +35,33 @@
             <label for='bodyColor'>Inside</label>
             <input type='text' data-coloris id='bodyColor' value='#FFF'>
         </div>
+        <hr>
+
+        <div class='control'>
+            <label for='textColor'>Text Color</label>
+            <input type='text' data-coloris id='textColor' value='#000'>
+        </div>
+        <div class='control'>
+            <label for='rowColor'>Row Color</label>
+            <input type='text' data-coloris id='rowColor' value='#D4F7A1'>
+        </div>
     </div>
     <button id="convertToPNG">Convert to PNG</button>
 
     <div id='svg-box' class='graphic-container'></div>
     <div id='png-container' class='graphic-container'></div>
+    <pre>
+        <code>
+            .page .classTable.frame {
+                border-image-source: url('image host URL');  /* direct link to image on image host */
+                background-color: <span id='bgColorCode'></span>; /* match to "inside" hex code */
+                color: <span id='textColorCode'>white</span>;   /* text color */
+                & table tbody tr:nth-child(odd) td {
+                    background-color: <span id='rowColorCode'></span>;  /* changes row highlights */
+                }
+              }
+        </code>
+    </pre>
 
     <script>
         const outerFrameColorPicker = document.getElementById('outerFrameColor');
@@ -47,6 +69,8 @@
 		const outerFrameColorStrokeWidth = document.getElementById('outerFrameColorStrokeWidth');
 		const innerFrameColorStrokeWidth = document.getElementById('innerFrameColorStrokeWidth');
 		const bodyColorPicker = document.getElementById('bodyColor');
+        const textColorPicker = document.getElementById('textColor');
+        const rowColorPicker = document.getElementById('rowColor');
 		Coloris({
 			theme: 'pill'
 		})
@@ -59,6 +83,8 @@
 		outerFrameColorStrokeWidth.addEventListener('input', ()=>{setColor({ el: '#outer-color-frame', property: 'stroke-width' }, outerFrameColorStrokeWidth.value + 'px')}, false);
 		innerFrameColorStrokeWidth.addEventListener('input', ()=>{setColor({ el: '#inner-color-frame', property: 'stroke-width' }, innerFrameColorStrokeWidth.value + 'px')}, false);
 		bodyColorPicker.addEventListener('input', ()=>{setColor({ el: '#frame-body', property: 'fill' }, bodyColorPicker.value)}, false);
+        textColorPicker.addEventListener('input', ()=>{setColor({ el:'#text', property: 'fill' }, textColorPicker.value)}, false);
+        rowColorPicker.addEventListener('input', ()=>{setColor({ el:'#rows', property: 'fill' }, rowColorPicker.value)}, false);
 
         // Call updateColor once when the page loads to initialize the SVG with the default color
         loadSVG();
@@ -73,6 +99,7 @@
 			} else {
 				frame.findOne(target.el).css(target.property, value);
 			}
+            generateCSS();
         }
 
         async function loadSVG() {
@@ -97,8 +124,10 @@
             });
         }
 
-            // Button click event to convert SVG to PNG
-			document.getElementById('convertToPNG').addEventListener('click', () => {
+        // Button click event to convert SVG to PNG
+        document.getElementById('convertToPNG').addEventListener('click', () => {
+            frame.findOne('#text').hide();
+            frame.findOne('#rows').hide();
             const svgString = frame.svg();
             const canvas = document.createElement('canvas');
             const ctx = canvas.getContext('2d');
@@ -115,7 +144,19 @@
                 DOMURL.revokeObjectURL(png);
             }
             img.src = url;
+
+
+            frame.findOne('#text').show();
+            frame.findOne('#rows').show();
+
+            
         });
+
+        function generateCSS() {
+            document.getElementById('bgColorCode').textContent = bodyColorPicker.value;
+            document.getElementById('textColorCode').textContent = textColorPicker.value;
+            document.getElementById('rowColorCode').textContent = rowColorPicker.value;
+        }
     </script>
 </body>
 
