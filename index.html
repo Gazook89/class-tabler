@@ -52,14 +52,14 @@
     <div id='png-container' class='graphic-container'></div>
     <pre>
         <code>
-            .page .classTable.frame {
-                border-image-source: url('image host URL');  /* direct link to image on image host */
-                background-color: <span id='bgColorCode'></span>; /* match to "inside" hex code */
-                color: <span id='textColorCode'>white</span>;   /* text color */
-                & table tbody tr:nth-child(odd) td {
-                    background-color: <span id='rowColorCode'></span>;  /* changes row highlights */
-                }
-              }
+.page .classTable.frame {
+    border-image-source: url('image host URL');  /* direct link to image on image host */
+    background-color: <span id='bgColorCode'></span>; /* match to "inside" hex code */
+    color: <span id='textColorCode'>white</span>;   /* text color */
+    & table tbody tr:nth-child(odd) td {
+        background-color: <span id='rowColorCode'></span>;  /* changes row highlights */
+    }
+}
         </code>
     </pre>
 
@@ -79,7 +79,7 @@
         let frame;
 
         outerFrameColorPicker.addEventListener('input', ()=>{setColor({ el:'#outer-color-frame', property: 'stroke' }, outerFrameColorPicker.value)}, false);
-        innerFrameColorPicker.addEventListener('input', ()=>{setColor({ el:'#inner-color-frame', property: 'stroke' }, innerFrameColorPicker.value)}, false);
+        innerFrameColorPicker.addEventListener('input', ()=>{setColor([{ el:'#inner-color-frame', property: 'stroke' }, { el:'#inner-color-frame-circles', property: 'fill'}], innerFrameColorPicker.value)}, false);
 		outerFrameColorStrokeWidth.addEventListener('input', ()=>{setColor({ el: '#outer-color-frame', property: 'stroke-width' }, outerFrameColorStrokeWidth.value + 'px')}, false);
 		innerFrameColorStrokeWidth.addEventListener('input', ()=>{setColor({ el: '#inner-color-frame', property: 'stroke-width' }, innerFrameColorStrokeWidth.value + 'px')}, false);
 		bodyColorPicker.addEventListener('input', ()=>{setColor({ el: '#frame-body', property: 'fill' }, bodyColorPicker.value)}, false);
@@ -91,14 +91,27 @@
 
         async function setColor(target, value) {
             // Update the color of the SVG element
-			if(frame.findOne(target.el).node.children.length > 0){
-				frame.findOne(target.el).each(function () {
-					this.css(target.property, value);
-				});
+            let elArray = [];
+            if(Array.isArray(target)){
+                elArray = JSON.parse(JSON.stringify(target));
+            } else if(typeof target === 'object'){
+                elArray.push(target);
+            } else {
+                console.log('must be single object, or array of objects');
+                return;
+            }
+            elArray.forEach((obj)=>{
+                if(frame.findOne(obj.el).node.children.length > 0){
+                    frame.findOne(obj.el).each(function () {
+                        this.css(obj.property, value);
+                    });
 
-			} else {
-				frame.findOne(target.el).css(target.property, value);
-			}
+                } else {
+                    frame.findOne(obj.el).css(obj.property, value);
+                }
+
+            });
+
             generateCSS();
         }
 
